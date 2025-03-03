@@ -64,7 +64,6 @@ Collate:
     'exit.R'
     'cohort.R'
     'collectCodesetId.R'
-    'conceptSets.R'
     'countOccurrences.R'
     'isStandard.R'
     'isStandardCS.R'
