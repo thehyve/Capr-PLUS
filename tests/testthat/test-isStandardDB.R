@@ -1,9 +1,9 @@
 # source('R/isStandardDB.R')
 
 # Mock data
-mock_db_connection <- mock()
+mock_db_connection <- mockery::mock()
 attr(mock_db_connection, "dbms") <- "postgresql"
-mock_querySql <- mock(
+mock_querySql <- mockery::mock(
   data.frame(
     CONCEPT_ID = c(1, 2, 3),
     CONCEPT_NAME = c("Concept1", "Concept2", "Concept3"),
@@ -30,7 +30,7 @@ test_that("isStandardDB identifies non-standard concepts", {
 })
 
 test_that("isStandardDB returns empty tibble when no non-standard concepts", {
-  mock_querySql_empty <- mock(
+  mock_querySql_empty <- mockery::mock(
     data.frame(
       CONCEPT_ID = c(1, 2, 3),
       CONCEPT_NAME = c("Concept1", "Concept2", "Concept3"),
@@ -57,7 +57,7 @@ test_that("isStandardDB saves results when save_path is provided", {
     "table1" = c("concept_id_col1", "source_code_col1")
   )
 
-  mock_querySql <- mock(
+  mock_querySql <- 
     data.frame(
         CONCEPT_ID = c(1, 2, 3),
         CONCEPT_NAME = c("Concept1", "Concept2", "Concept3"),
@@ -82,7 +82,7 @@ test_that("isStandardDB handles multiple tables", {
     "table2" = c("concept_id_col2", "source_code_col2")
   )
   
-  mock_querySql <- mock(
+  mock_querySql <- mockery::mock(
     data.frame(
         CONCEPT_ID = c(1, 2, 3),
         CONCEPT_NAME = c("Concept1", "Concept2", "Concept3"),
