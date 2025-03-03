@@ -14,12 +14,6 @@
 #'
 #' If a `save_path` is provided, each joined table (including both standard and non-standard concepts) is saved to the specified directory with the same name as the original table file.
 #'
-#' @examples
-#' # Assuming you have a valid DBI connection `db_conn` and your tables are specified in the `links` list:
-#' links <- list(
-#'   "table1" = c("concept_id_col1", "source_code_col1"),
-#'   "table2" = c("concept_id_col2", "source_code_col2")
-#' )
 #' non_standard_concepts <- isStandardDB(db_conn, "cdm_schema", "vocab_schema", links, "path/to/save_non_standard/")
 #'
 #' @importFrom readr read_csv write_csv

@@ -9,10 +9,6 @@
 #'
 #' @details The function processes a given concept set to identify non-standard concepts. Non-standard concepts are those not marked as 'S' (Standard) or 'C' (Classification) in their `standard_concept` attribute. The function creates a data frame with concept details, replaces empty `standard_concept` values with "Non-standard", filters out standard and classification concepts, and if a `save_path` is provided, saves this information to a CSV file. If no non-standard concepts are found, appropriate messages are displayed.
 #'
-#' @examples
-#' # Assuming you have a concept set `conceptSet`:
-#' non_standard_concepts <- isStandardCS(conceptSet, "path/to/save_standard_AND_non_standard/")
-#'
 #' @export
 isStandardCS <- function(conceptSet, save_path = NULL) {
   # Initialize vectors for non-standard concepts

@@ -15,16 +15,6 @@
 #'         The tibble also includes the concept names and domain ids derived from `v` and is arranged by the total
 #'         record count (direct + descendant).
 #'
-#' @examples
-#' # Assuming `db_connection` is a valid database connection, `cdm_schema` is set to "public",
-#' # `tables` contains the names of the tables to search, `links` defines the relevant fields,
-#' # and `v` contains the values to search for:
-#' results <- countOccurrences(
-#'   v = c(1, 2), tables = c("observation", "condition_occurrence"),
-#'   links = list(observation = "observation_concept_id", condition_occurrence = "condition_concept_id"),
-#'   db_connection = db_connection, cdm_schema = "public", vocab_schema = "vocabulary"
-#' )
-#'
 #' @export
 countOccurrences <- function(v, tables, links, db_connection, cdm_schema, vocab_schema, save_path = NULL) {
   stopifnot(is.vector(v))

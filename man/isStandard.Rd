@@ -26,8 +26,3 @@ The function first queries the `cdm.concept` table from the provided SQL databas
 
 If a `save_path` is provided, each joined table that contains at least one non-standard concept is saved to the specified directory with the same name as the original table file.
 }
-\examples{
-# Assuming you have a valid DBI connection `db_conn` and your tables are located in "path/to/data_concepts":
-non_standard_concepts <- isStandard(db_conn, "path/to/data_concepts", "path/to/save_non_standard/")
-
-}

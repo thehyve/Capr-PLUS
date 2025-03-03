@@ -17,7 +17,7 @@ License: Apache License (>= 2)
 URL: https://ohdsi.github.io/Capr/, https://github.com/OHDSI/Capr/
 BugReports: https://github.com/OHDSI/Capr/issues/
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Depends: 
   R (>= 3.5.0)
 Imports: 
