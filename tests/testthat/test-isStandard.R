@@ -1,4 +1,4 @@
-source("R/isStandard.R")
+# source("R/isStandard.R")
 
 test_that("isStandard works expectedly with no data", {
   db_connection <- mockery::mock()

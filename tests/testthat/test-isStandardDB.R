@@ -1,9 +1,4 @@
-# tests/testthat/test-isStandardDB.R
-
-library(testthat)
-library(mockery)
-library(dplyr)
-source('R/isStandardDB.R')
+# source('R/isStandardDB.R')
 
 # Mock data
 mock_db_connection <- mock()

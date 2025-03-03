@@ -1,4 +1,4 @@
-source("R/isStandardCS.R")
+# source("R/isStandardCS.R")
 
 test_that("isStandardCS works correctly with standard concepts only", {
   # Load test data

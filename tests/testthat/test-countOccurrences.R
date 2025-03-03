@@ -1,4 +1,4 @@
-source("R/countOccurrences.R")
+# source("R/countOccurrences.R")
 
 test_that("countOccurrences returns correct structure", {
   mock_db <- mockery::mock()
