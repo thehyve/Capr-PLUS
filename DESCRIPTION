@@ -67,5 +67,6 @@ Collate:
     'countOccurrences.R'
     'isStandard.R'
     'isStandardCS.R'
+    'isStandardDB.R'
     'table_linked_to_concept_field.R'
     'utils.R'
