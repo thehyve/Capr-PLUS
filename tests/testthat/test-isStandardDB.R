@@ -13,7 +13,7 @@ mock_querySql <- mockery::mock(
 )
 
 # Mock the DatabaseConnector::querySql function
-stub(isStandardDB, "DatabaseConnector::querySql", mock_querySql)
+mockery::stub(isStandardDB, "DatabaseConnector::querySql", mock_querySql)
 
 test_that("isStandardDB identifies non-standard concepts", {
   links <- list(
@@ -66,7 +66,7 @@ test_that("isStandardDB saves results when save_path is provided", {
     )
   )
 
-  stub(isStandardDB, "DatabaseConnector::querySql", mock_querySql)
+  mockery::stub(isStandardDB, "DatabaseConnector::querySql", mock_querySql)
 
   result <- isStandardDB(mock_db_connection, "cdm_schema", "vocab_schema", links, save_path = temp_dir)
   
@@ -92,7 +92,7 @@ test_that("isStandardDB handles multiple tables", {
     cycle = TRUE
   )
 
-  stub(isStandardDB, "DatabaseConnector::querySql", mock_querySql)
+  mockery::stub(isStandardDB, "DatabaseConnector::querySql", mock_querySql)
 
   result <- isStandardDB(mock_db_connection, "cdm_schema", "vocab_schema", links)
   
