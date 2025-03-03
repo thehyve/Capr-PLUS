@@ -57,7 +57,7 @@ test_that("isStandardDB saves results when save_path is provided", {
     "table1" = c("concept_id_col1", "source_code_col1")
   )
 
-  mock_querySql <- 
+  mock_querySql <- mockery::mock(
     data.frame(
         CONCEPT_ID = c(1, 2, 3),
         CONCEPT_NAME = c("Concept1", "Concept2", "Concept3"),
