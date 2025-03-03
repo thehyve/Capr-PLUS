@@ -78,6 +78,10 @@ isStandardDB <- function(db_connection, cdm_schema, vocab_schema, links, save_pa
 
   message(paste0("Finished checking for non-standard concepts.\n", nrow(res), " non-standard concepts found across tables."))
 
+  if (class(db_connection) == "mock") {
+    return(res)
+  }
+
   DBI::dbDisconnect(db_connection)
 
   return(res)
