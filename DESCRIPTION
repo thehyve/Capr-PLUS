@@ -39,6 +39,7 @@ Imports:
     lubridate,
     DBI,
     DatabaseConnector,
+    RSQLite,
     SqlRender,
     generics,
     CirceR,

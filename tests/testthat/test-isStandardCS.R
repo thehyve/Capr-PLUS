@@ -1,5 +1,4 @@
-# source("R/isStandardCS.R")
-
+print(getwd())
 test_that("isStandardCS works correctly with standard concepts only", {
   # Load test data
   dat <- Capr::readConceptSet("tests/testthat/resources/ihd_cad_S.json")
