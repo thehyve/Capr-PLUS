@@ -1,7 +1,7 @@
-print(getwd())
+path <- getwd()
 test_that("isStandardCS works correctly with standard concepts only", {
   # Load test data
-  dat <- Capr::readConceptSet("tests/testthat/resources/ihd_cad_S.json")
+  dat <- Capr::readConceptSet(paste0(path, "tests/testthat/resources/ihd_cad_S.json"))
 
   res <- isStandardCS(dat)
 
@@ -10,7 +10,7 @@ test_that("isStandardCS works correctly with standard concepts only", {
 
 test_that("isStandardCS works correctly with non-standard concepts only", {
   # Load test data
-  dat <- Capr::readConceptSet("tests/testthat/resources/ihd_cad_NS.json")
+  dat <- Capr::readConceptSet(paste0(path, "/tests/testthat/resources/ihd_cad_NS.json"))
 
   res <- isStandardCS(dat)
 
@@ -21,7 +21,7 @@ test_that("isStandardCS works correctly with non-standard concepts only", {
 
 test_that("isStandardCS works correctly with all kinds of concepts", {
   # Load test data
-  dat <- Capr::readConceptSet("tests/testthat/resources/ihd_cad_mix.json")
+  dat <- Capr::readConceptSet(paste0(path, "tests/testthat/resources/ihd_cad_mix.json"))
 
   res <- isStandardCS(dat)
 
