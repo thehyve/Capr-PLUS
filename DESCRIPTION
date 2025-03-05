@@ -17,7 +17,7 @@ License: Apache License (>= 2)
 URL: https://ohdsi.github.io/Capr/, https://github.com/OHDSI/Capr/
 BugReports: https://github.com/OHDSI/Capr/issues/
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Depends: 
   R (>= 3.5.0)
 Imports: 
@@ -39,11 +39,11 @@ Imports:
     lubridate,
     DBI,
     DatabaseConnector,
+    RSQLite,
     SqlRender,
     generics,
     CirceR,
-    codetools,
-    readr,
+    mockery,
 Suggests:
     testthat (>= 3.0.0),
     knitr,
@@ -64,9 +64,9 @@ Collate:
     'exit.R'
     'cohort.R'
     'collectCodesetId.R'
-    'conceptSets.R'
     'countOccurrences.R'
     'isStandard.R'
     'isStandardCS.R'
+    'isStandardDB.R'
     'table_linked_to_concept_field.R'
     'utils.R'
