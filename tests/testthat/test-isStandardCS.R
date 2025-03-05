@@ -1,4 +1,12 @@
 path <- getwd()
+print(paste("Current wd:", path))
+print(paste("Files list no wd specified:", list.files()))
+print(paste("Files list wd specified:", list.files(path)))
+print(paste("Files list path + test dir", list.files(paste0(path, "/tests/testthat/resources/"))))
+if (grep("tests/testthat", path)) {
+  path <- gsub("tests/testthat.*", "", path)
+}
+print(paste("Cleaned path:", path))
 test_that("isStandardCS works correctly with standard concepts only", {
   # Load test data
   dat <- Capr::readConceptSet(paste0(path, "tests/testthat/resources/ihd_cad_S.json"))

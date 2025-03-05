@@ -30,9 +30,9 @@ isStandard <- function(db_connection, data_concepts_path, vocab_schema, save_pat
   )
 
   concept_table <- DatabaseConnector::querySql(db_connection, concept_table_query_translated) |>
-    dplyr::rename(concept_id = CONCEPT_ID) |>
-    dplyr::mutate(concept_id = as.character(concept_id)) |>
-    dplyr::mutate(concept_id = tolower(trimws(concept_id)))
+    dplyr::rename(concept_id = .data$CONCEPT_ID) |>
+    dplyr::mutate(concept_id = as.character(.data$concept_id)) |>
+    dplyr::mutate(concept_id = tolower(trimws(.data$concept_id)))
 
   # Initialize vectors for non-standard concepts
   nonStandard <- c()
@@ -58,21 +58,25 @@ isStandard <- function(db_connection, data_concepts_path, vocab_schema, save_pat
         sourceCode = readr::col_character(),
         concept_id = readr::col_character()
       )) |>
-      dplyr::mutate(across(c(sourceCode, concept_id), ~ gsub("\u00A0", " ", .))) |>
-      dplyr::mutate(dplyr::across(c(sourceCode, concept_id), ~ trimws(.))) |>
-      dplyr::filter(!is.na(sourceCode), !is.na(concept_id)) |>
+      dplyr::mutate(across(c(.data$sourceCode, .data$concept_id), ~ gsub("\u00A0", " ", .))) |>
+      dplyr::mutate(dplyr::across(c(.data$sourceCode, .data$concept_id), ~ trimws(.))) |>
+      dplyr::filter(!is.na(.data$sourceCode), !is.na(.data$concept_id)) |>
       dplyr::mutate(
-        concept_id = tolower(concept_id),
-        concept_id = as.character(concept_id)
+        concept_id = tolower(.data$concept_id),
+        concept_id = as.character(.data$concept_id)
       ) |>
-      dplyr::select(sourceCode, concept_id)
+      dplyr::select(.data$sourceCode, .data$concept_id)
 
     # Join tables
     joined <- dplyr::inner_join(concept_table, tb, by = "concept_id")|>
-      dplyr::rename(standard_concept = STANDARD_CONCEPT, concept_name = CONCEPT_NAME) |>
-      dplyr::mutate(standard_concept = ifelse(is.na(standard_concept), 'Non-standard', standard_concept)) |>
+      dplyr::rename(
+        standard_concept = .data$STANDARD_CONCEPT,
+        concept_name = .data$CONCEPT_NAME
+        ) |>
+      dplyr::mutate(standard_concept = ifelse(
+        is.na(.data$standard_concept),'Non-standard', .data$standard_concept)) |>
       dplyr::mutate(standard_concept = dplyr::recode(
-        standard_concept,
+        .data$standard_concept,
         "S" = "Standard"
       )) |>
       dplyr::filter(!(standard_concept == "Standard"))
