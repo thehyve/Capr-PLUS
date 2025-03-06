@@ -14,12 +14,6 @@
 #'
 #' If a `save_path` is provided, each joined table (including both standard and non-standard concepts) is saved to the specified directory with the same name as the original table file.
 #'
-#' @examples
-#' # Assuming you have a valid DBI connection `db_conn` and your tables are specified in the `links` list:
-#' links <- list(
-#'   "table1" = c("concept_id_col1", "source_code_col1"),
-#'   "table2" = c("concept_id_col2", "source_code_col2")
-#' )
 #' non_standard_concepts <- isStandardDB(db_conn, "cdm_schema", "vocab_schema", links, "path/to/save_non_standard/")
 #'
 #' @importFrom readr read_csv write_csv
@@ -55,14 +49,14 @@ isStandardDB <- function(db_connection, cdm_schema, vocab_schema, links, save_pa
     
     concept_table <- DatabaseConnector::querySql(db_connection, concept_table_query_translated) |>
       dplyr::rename(
-        concept_id = CONCEPT_ID,
-        concept_name = CONCEPT_NAME,
-        source_code = SOURCE_CODE,
-        standard_concept = STANDARD_CONCEPT) |>
-      dplyr::mutate(concept_id = as.character(concept_id)) |>
-      dplyr::mutate(concept_id = tolower(trimws(concept_id)))
+        concept_id = .data$CONCEPT_ID,
+        concept_name = .data$CONCEPT_NAME,
+        source_code = .data$SOURCE_CODE,
+        standard_concept = .data$STANDARD_CONCEPT) |>
+      dplyr::mutate(concept_id = as.character(.data$concept_id)) |>
+      dplyr::mutate(concept_id = tolower(trimws(.data$concept_id)))
     concept_table["source_table"] <- rep.int(table, nrow(concept_table))
-    nonStandardDF <- concept_table |> dplyr::filter(is.na(standard_concept))
+    nonStandardDF <- concept_table |> dplyr::filter(is.na(.data$standard_concept))
     
     # Initialize res on first loop iteration
     if (!exists("res")) {
@@ -83,6 +77,12 @@ isStandardDB <- function(db_connection, cdm_schema, vocab_schema, links, save_pa
     }
 
   message(paste0("Finished checking for non-standard concepts.\n", nrow(res), " non-standard concepts found across tables."))
+
+  if (inherits(db_connection, "mock")) {
+    return(res)
+  }
+
+  DBI::dbDisconnect(db_connection)
 
   return(res)
 }

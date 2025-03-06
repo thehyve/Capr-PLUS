@@ -15,16 +15,6 @@
 #'         The tibble also includes the concept names and domain ids derived from `v` and is arranged by the total
 #'         record count (direct + descendant).
 #'
-#' @examples
-#' # Assuming `db_connection` is a valid database connection, `cdm_schema` is set to "public",
-#' # `tables` contains the names of the tables to search, `links` defines the relevant fields,
-#' # and `v` contains the values to search for:
-#' results <- countOccurrences(
-#'   v = c(1, 2), tables = c("observation", "condition_occurrence"),
-#'   links = list(observation = "observation_concept_id", condition_occurrence = "condition_concept_id"),
-#'   db_connection = db_connection, cdm_schema = "public", vocab_schema = "vocabulary"
-#' )
-#'
 #' @export
 countOccurrences <- function(v, tables, links, db_connection, cdm_schema, vocab_schema, save_path = NULL) {
   stopifnot(is.vector(v))
@@ -74,11 +64,14 @@ countOccurrences <- function(v, tables, links, db_connection, cdm_schema, vocab_
     combined_res <- DatabaseConnector::dbGetQuery(db_connection, sql_translated)
 
     ind_not_in_data <- which(!(v %in% combined_res$concept_id))
+    concept_id <- v[ind_not_in_data]
+    concept_name <- "Unknown; concept_id not found in data"
+    domain_id <- "Unknown; concept_id not found in data"
     combined_res <- combined_res |>
       dplyr::bind_rows(tibble(
-        concept_id = v[ind_not_in_data],
-        concept_name = "Unknown; concept_id not found in data",
-        domain_id = "Unknown; concept_id not found in data",
+        concept_id = concept_id,
+        concept_name = concept_name,
+        domain_id = domain_id,
         count_persons = 0,
         count_records = 0,
         desc_count_person = 0,
@@ -92,15 +85,15 @@ countOccurrences <- function(v, tables, links, db_connection, cdm_schema, vocab_
 
   # Combine all results into a single data frame and transform
   final_res <- dplyr::bind_rows(results) |>
-    dplyr::group_by(concept_id, concept_name, domain_id) |>
+    dplyr::group_by(.data$concept_id, .data$concept_name, .data$domain_id) |>
     dplyr::summarise(
-      count_persons = sum(count_persons),
-      count_records = sum(count_records),
-      desc_count_person = sum(desc_count_person),
-      desc_count_record = sum(desc_count_record)
+      count_persons = sum(.data$count_persons),
+      count_records = sum(.data$count_records),
+      desc_count_person = sum(.data$desc_count_person),
+      desc_count_record = sum(.data$desc_count_record)
     ) |>
     dplyr::ungroup() |>
-    dplyr::arrange(desc(desc_count_record))
+    dplyr::arrange(desc(.data$desc_count_record))
 
   if (!is.null(save_path)) {
     readr::write_csv(final_res, paste0(save_path, "/", "count_occurrences.csv"))
